@@ -1,0 +1,34 @@
+@import 'global/scss/bootstrap-variables';
+
+
+.reference-tooltip-plugin {
+    
+    .reference-tooltip__container {
+        color: $color-primary;
+        font-size: 0.7rem;
+        vertical-align: super;
+        
+        &:hover {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        
+        .popover-body {
+            max-height: 50vh;
+            padding: 1rem;
+            overflow-y: auto;
+            font-size: 0.75rem;
+            
+            *:last-child {
+                margin-bottom: 0;
+            }
+            &:hover {
+                cursor: initial;
+            }
+            blockquote {
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+            }
+        }
+    }
+}

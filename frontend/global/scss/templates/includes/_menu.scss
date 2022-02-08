@@ -1,0 +1,134 @@
+@import 'global/scss/bootstrap-variables';
+
+
+
+$menu-gutter: ($grid-gutter-width / 2);
+$arrow-size: 10px;
+$arrow-x-offset: $arrow-size + $menu-gutter;
+
+@mixin active-menu-element($is-with-arrow: true) {
+    width: 100%;
+    color: $color-primary;
+    background: rgba(221, 225, 227, 0.64);
+    background: $gray-200;
+
+    &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        left: 0;
+        top: 0;
+        border-left: 4px solid $color-primary;
+    }
+    &::before {
+        @if ($is-with-arrow) {
+            @extend .arrow;
+        }
+        transform: rotate(180deg) translateX($arrow-x-offset);
+    }
+}
+
+.menu-column {
+    $text-padding: 7px;
+    padding-left: 0;
+    position: relative;
+
+    .selected a {
+        @include active-menu-element($is-with-arrow: false);
+    }
+
+    .menu-container {
+        padding: 0;
+        width: 100%;
+        height: 100vh;
+        top: $navbar-fixed-height;
+        overflow-y: scroll;
+        position: sticky;
+
+        @include media-breakpoint-down(xxl) {
+            position: sticky;
+        }
+        @include media-breakpoint-up(lg) {
+            &::-webkit-scrollbar {
+                width: 8px;
+                background-color: $gray-200;
+            }
+    
+            &::-webkit-scrollbar-track-piece {
+            }
+            &::-webkit-scrollbar-thumb {
+                background-color: $gray-300;
+                &:hover {
+                    background-color: $gray-400;
+                }
+            }
+        }
+        .metismenu {
+            position: absolute;
+            width: 100%;
+            padding-top: $layout-docs-padding-top - $menu-gutter;
+
+            .mm-active {
+                ul {
+                    margin: $text-padding 0;
+                }
+            }
+        }
+        ul {
+            padding-left: 0;
+            list-style: none;
+
+            li {
+                .arrow {
+                    content: '';
+                    background: no-repeat url(~global/img/arrow.svg);
+                    display: inline-block;
+                    width: $arrow-size;
+                    height: $arrow-size;
+                    position: absolute;
+                    transform: translateX(-$arrow-x-offset);
+                }
+                a {
+                    display: flex;
+                    position: relative;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    padding: $text-padding $grid-gutter-width;
+                    padding-left: $grid-gutter-width + $arrow-size;
+                    color: inherit;
+                    font-size: 0.95rem;
+                
+                    &:hover {
+                        text-decoration: none;
+                    }
+                    &[aria-expanded='true'] {
+                        @include active-menu-element;
+                    }
+                    &[aria-expanded='false'] {
+                        &::before {
+                            @extend .arrow;
+                        }
+                    }
+                }
+                ul {
+                    a {
+                        padding-left: $grid-gutter-width * 2;
+                    }
+                    ul {
+                        a {
+                            padding-left: $grid-gutter-width * 3;
+                        }
+                        ul {
+                            a {
+                                padding-left: $grid-gutter-width * 4;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

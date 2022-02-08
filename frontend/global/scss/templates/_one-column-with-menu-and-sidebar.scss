@@ -1,0 +1,42 @@
+@import 'global/scss/bootstrap-variables';
+
+
+.one-column-with-menu-and-sidebar {
+    .menu-column {
+        min-height: 600px;
+    }
+
+    &.container-custom {
+        .row {
+            justify-content: space-between;
+        }
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 1rem;
+        }
+    }
+
+    .aside-right {
+        .aside-right-fixed {
+            position: relative;
+            
+            @include media-breakpoint-down(xxl) {
+                position: relative;
+            }
+            &.position-fixed {
+                position: fixed;
+            }
+        }
+    }
+    //.aside-right {
+    //    .aside-right-fixed {
+    //        position: sticky;
+    //        top: $navbar-fixed-height;
+    //        
+    //        @include media-breakpoint-down(xxl) {
+    //            position: sticky;
+    //        }
+    //    }
+    //}
+}

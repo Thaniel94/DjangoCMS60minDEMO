@@ -1,0 +1,10 @@
+@import 'global/scss/bootstrap-variables';
+
+
+.post-detail {
+    margin-bottom: 2rem;
+    
+    .post-title {
+        border-bottom: none;
+    }
+}

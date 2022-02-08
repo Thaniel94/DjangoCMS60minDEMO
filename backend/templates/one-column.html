@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+
+{% load cms_tags sekizai_tags static %}
+
+{% block messages %}{# remove from here to move them below #}{% endblock messages %}
+
+{% block content %}
+    
+    {% include 'includes/messages.html' with messages=messages %}
+
+    <main>
+        <div class="container main-column">
+            {% placeholder 'content' %}
+        </div>
+    </main>
+
+{% endblock %}

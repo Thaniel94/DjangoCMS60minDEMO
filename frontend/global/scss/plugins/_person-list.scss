@@ -1,0 +1,35 @@
+.person-list-plugin {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+    
+    .person-list-title {
+        margin-bottom: 25px;
+        text-align: center;
+        
+    }
+    .person-children {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        
+        .person-plugin {
+            max-width: 200px;
+            margin: 0 25px;
+            margin-top: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+            
+            .person-photo {
+                border-radius: 50% !important;
+            }
+            
+            .person-name {
+                margin-top: 20px;
+                margin-bottom: 10px;
+                font-size: 17px;
+                font-weight: bold;
+            }
+        }
+    }
+}

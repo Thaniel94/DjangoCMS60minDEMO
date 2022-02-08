@@ -1,0 +1,91 @@
+@import 'global/scss/bootstrap-variables';
+
+
+.app-blog {
+    background: rgba(253, 254, 254, 1);
+}
+
+
+
+.blog-list {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: $grid-gutter-width;
+    
+    &.plugin-blog {
+        padding: 0;
+    }
+    
+    .blog-list-items {
+        display: flex;
+        justify-content: flex-start;
+        margin-top: $grid-gutter-width/2;
+        
+        .post-item-container {
+            margin-bottom: $grid-gutter-width;
+    
+            .post-item {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                background: white;
+                box-shadow: 0 2px 6px 0 #0000001f;
+                border-bottom: 2px solid map-get($theme-colors, 'primary');
+
+                .blog-visual {
+                    height: 240px;
+                    background-repeat: no-repeat !important;
+                    background-size: cover !important;
+                    background-position: 50% 50% !important;
+                    
+                    @include media-breakpoint-down(lg) {
+                        height: 280px;
+                    }
+                    @include media-breakpoint-down(md) {
+                        height: 230px;
+                    }
+                    @include media-breakpoint-down(sm) {
+                        height: 280px;
+                    }
+                    @include media-breakpoint-down(xs) {
+                        height: 250px;
+                    }
+                }
+
+                .post-item-body {
+                    padding: 20px;
+
+                    .post-item-meta {
+                        margin-bottom: 10px;
+                        color: gray;
+                
+                        .post-item-author {
+                    
+                        }
+                
+                        .separator {
+                        }
+                
+                        .post-item-date {
+                    
+                        }
+                    }
+            
+                    .post-item-link {
+                        &:hover {
+                            text-decoration: none;
+                        }
+                
+                        .title {
+                            margin-top: 1rem;
+                            padding-top: 0;
+                            font-size: 1.4rem;
+                            color: $body-color;
+                        }
+                    }
+            
+                }
+            }
+        }
+    }
+}

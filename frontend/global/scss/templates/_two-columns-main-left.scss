@@ -1,0 +1,30 @@
+@import 'global/scss/bootstrap-variables';
+
+
+.aside-right {
+    padding-left: $grid-gutter-width/2;
+    position: relative;
+
+    .aside-right-fixed {
+        &.position-fixed {
+            position: fixed;
+            padding-right: $grid-gutter-width-half;
+        }
+    }
+
+    @include media-breakpoint-down(md) {
+        .djangocms-toc {
+            display: none;
+        }
+    }
+}
+//.aside-right {
+//    padding-left: $grid-gutter-width/2;
+//    position: relative;
+//
+//    @include media-breakpoint-down(md) {
+//        .djangocms-toc {
+//            display: none;
+//        }
+//    }
+//}

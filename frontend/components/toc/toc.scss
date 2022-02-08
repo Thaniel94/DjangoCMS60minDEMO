@@ -1,0 +1,72 @@
+@import 'node_modules/tocbot/src/scss/tocbot-core';
+@import 'node_modules/tocbot/src/scss/tocbot-default-theme';
+@import 'global/scss/bootstrap-variables';
+
+
+
+.djangocms-toc {
+    position: relative;
+    padding-top: 5px;
+    padding-left: $layout-docs-padding-top;
+    $aside-col-size: 7;
+    max-width: (map-get($container-max-widths, 'xl') / $grid-columns) * $aside-col-size;
+    font-size: 14px;
+
+    &.is-position-fixed {
+        position: relative !important;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    ul ul {
+        padding-left: 1.5em;
+    }
+    
+    li a {
+        display: inline-block;
+        padding: 5px 0;
+        transition: all 0.3s cubic-bezier(0.230, 1.000, 0.320, 1.000);
+        color: $gray-600;
+        text-decoration: none;
+    }
+    
+    .toc-link::before {
+        background-color: $gray-300;
+        content: ' ';
+        display: inline-block;
+        height: inherit;
+        left: 0;
+        margin-top: -1px;
+        position: absolute;
+        width: 2px;
+    }
+
+    .is-active-link{
+        color: $color-primary;
+        font-weight: normal;
+
+        &::before {
+            background-color: $color-primary;
+        }
+    }
+
+}
+
+.one-column-with-menu-and-sidebar {
+    .djangocms-toc {
+        top: 5px;
+    }
+    .djangocms-toc:first-child {
+        top: 5px !important;
+        padding-top: $layout-docs-padding-top;
+    }
+}
+.two-columns-main-left {
+    .djangocms-toc {
+        top: 3rem;
+    }
+}

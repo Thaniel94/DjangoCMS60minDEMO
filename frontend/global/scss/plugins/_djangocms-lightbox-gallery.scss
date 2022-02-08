@@ -1,0 +1,18 @@
+.light-gallery-plugin {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    
+    a {
+        display: flex;
+        margin-bottom: 18px;
+        cursor: zoom-in;
+    }
+}
+
+
+.cms-toolbar-expanded {
+    .lg-outer .lg-thumb-outer {
+        bottom: 46px;
+    }
+}

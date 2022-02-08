@@ -1,0 +1,81 @@
+{% load static menu_tags solo_tags sekizai_tags cms_tags i18n %}
+
+{% get_solo 'site_config.SiteConfig' as site_config %}
+
+{% get_current_language as lang_current %}
+
+<nav class="navbar navbar-expand-xl navbar-light {% if instance.is_full_width %}fixed-top{% else %}not-fixed-top{% endif %}">
+    <div class="container{% if instance.is_full_width %}-fluid {% endif %}">
+        {% render_model_block site_config  %}
+            <a class="navbar-brand d-flex" href="/">
+                {% if site_config.logo %}
+                    <img class="navbar-logo" src="{{ site_config.logo.url }}" alt="logo">
+                {% else %}
+                    {% include 'nav_bar/includes/icon.svg' %}
+                {% endif %}
+                <div class="site-title">
+                    <span class="site-name">{{ site_config.site_name }}</span>
+                    <span class="site-subname">{{ site_config.site_subname }}</span>
+                </div>
+            </a>
+        {% endrender_model_block %}
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            
+            {% if instance.is_use_multi_level_menu_on_mobile %}
+                <nav class="d-flex d-xl-none navbar-nav menu-column">
+                    <div class="menu-container">
+                        <ul class="metismenu-root">
+                            {% show_menu 0 10 100 100 'includes/menu.html' %}
+                            {% language_chooser 'nav_bar/includes/menu/lang-switch.html' %}
+                        </ul>
+                    </div>
+                </nav>
+            {% endif %}
+
+            <ul class="navbar-nav">
+                <div class="{% if instance.is_use_multi_level_menu_on_mobile %}d-none{% endif %} d-xl-flex">
+                    {% if instance.is_use_default_menu %}
+                        {% show_menu 0 1 100 100 'nav_bar/includes/menu/menu.html' %}
+                    {% else %}
+                        {% for plugin in instance.child_plugin_instances %}
+                            {% render_plugin plugin %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <div class="d-none d-lg-flex">
+                    {% language_chooser 'nav_bar/includes/menu/lang-switch.html' %}
+                </div>
+
+                {% if instance.is_enable_search_bar %}
+                    <div class="d-none d-xl-flex vue-search-component-container"
+                         algolia-api-key='{{ settings.ALGOLIA.API_KEY }}'
+                         algolia-application-id='{{ settings.ALGOLIA.APPLICATION_ID }}'
+                         algolia-index='cms_pages_{{ lang_current }}'
+                    >
+                        <div class="vue-search-component"></div>
+                    </div>
+                    {% if settings.DJANGO_ENV.value == 'local' %}
+                        <script data-is-reload-on-page-edit defer src="{{ settings.WEBPACK_DEV_URL }}/component_search.bundle.js"></script>
+                    {% else %}
+                        <script data-is-reload-on-page-edit defer src="{% static 'dist/component_search.js' %}"></script>
+                    {% endif %}
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+{% if instance.is_full_width %}
+    {% addtoblock 'body_classes' %}navbar-fixed{% endaddtoblock %}
+{% endif %}

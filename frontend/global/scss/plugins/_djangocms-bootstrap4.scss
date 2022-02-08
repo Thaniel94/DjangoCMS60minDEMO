@@ -1,0 +1,113 @@
+@import 'global/scss/bootstrap-variables';
+
+
+// this corrects a problem with margins for example with icons next to anchor texts in links in bootstrap4 button/link plugin
+.fa:before {
+    padding-right: 3px;
+}
+.fa:after {
+    padding-left: 3px;
+}
+
+
+@mixin grid-vertical-gutter-size($gutter) {
+    margin-top: - $gutter / 2;
+    margin-bottom: - $gutter / 2;
+    
+    > .col, > [class*='col-'] {
+        padding-top: $gutter / 2;
+        padding-bottom: $gutter / 2;
+    }
+}
+
+
+.row-plugin {
+    &--gutters {
+        &-vertical {
+            &-small {
+                @include grid-vertical-gutter-size($grid-gutter-width / 2);
+            }
+            &-normal {
+                @include grid-vertical-gutter-size($grid-gutter-width);
+            }
+            &-large {
+                @include grid-vertical-gutter-size($grid-gutter-width * 2);
+            }
+            &-extra_large {
+                @include grid-vertical-gutter-size($grid-gutter-width * 3.5);
+            }
+        }
+    }
+}
+
+
+[class^='container'], [class*=' container'] {
+    [class^='container'], [class*=' container'] {
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+    }
+}
+
+
+@mixin plugin-spacing-vertical-external-styles($size) {
+    margin-top: $grid-gutter-width * $size;
+    margin-bottom: $grid-gutter-width * $size;
+}
+@each $name, $size in $plugin-spacing-vertical-external {
+    %plugin-spacing-vertical-external-#{$name} {
+        @include plugin-spacing-vertical-external-styles($size);
+    }
+}
+
+@mixin plugin-spacing-vertical-internal-styles($size) {
+    padding-top: $grid-gutter-width * $size;
+    padding-bottom: $grid-gutter-width * $size;
+}
+@each $name, $size in $plugin-spacing-vertical-internal {
+    %plugin-spacing-vertical-internal-#{$name} {
+        @include plugin-spacing-vertical-internal-styles($size);
+    }
+}
+
+    
+.container-plugin {
+    > .container-internal {
+        margin: 0 auto;
+    }
+    & {
+        padding-right: 0;
+        padding-left: 0;
+        
+        &:first-child {
+            margin-top: 0;
+        }
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    &[data-width="full-width"] {
+        padding-right: 0;
+        padding-left: 0;
+    }
+
+    @each $name, $size in $plugin-spacing-vertical-external {
+        &[data-spacing-vertical-external="#{$name}"] {
+            @extend %plugin-spacing-vertical-external-#{$name};
+        }
+    }
+    @each $name, $size in $plugin-spacing-vertical-internal {
+        &[data-spacing-vertical-internal="#{$name}"] {
+            @extend %plugin-spacing-vertical-internal-#{$name};
+        }
+    }
+}
+
+
+.col {
+    display: flex;
+    flex-direction: column;
+}
+main.one-column-with-menu-and-sidebar {
+    padding-right: $grid-gutter-width-half;
+    padding-left: $grid-gutter-width-half;
+}

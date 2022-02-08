@@ -1,0 +1,53 @@
+@import 'global/scss/bootstrap-variables';
+
+
+@mixin icon($background-color) {
+    background-color: $background-color;
+    
+    &:hover {
+        background-color: darken($background-color, 15%);
+        cursor: pointer;
+    }
+}
+
+.djangocms-socialshare-plugin {
+    display: flex;
+    
+    .icon {
+        display: block;
+        margin-right: 17px;
+        color: inherit;
+        &:hover {
+            text-decoration: none;
+        }
+        
+        .fab, .fas {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            $size: 35px;
+            width: $size;
+            height: $size;
+            color: white;
+            font-size: 17px;
+            text-align: center;
+        }
+        
+        .fa-facebook-f {
+            @include icon(#4267B2);
+        }
+        .fa-linkedin-in {
+            @include icon(#0277b5);
+        }
+        .fa-envelope {
+            @include icon(#d44539);
+        }
+        .fa-github {
+            @include icon(black);
+            font-size: 21px;
+            &:hover {
+                background-color: lighten(black, 25%);
+            }
+        }
+    }
+}

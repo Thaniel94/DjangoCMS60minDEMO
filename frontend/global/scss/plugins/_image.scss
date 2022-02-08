@@ -1,0 +1,25 @@
+@import 'global/scss/bootstrap-variables';
+
+
+.image-plugin {
+    display: flex;
+    
+    .image-plugin__content {
+        display: flex;
+    }
+    
+    &[data-is-full-screen-on-click] a:hover {
+        cursor: zoom-in;
+    }
+    &--spacing-extra_small {
+        margin-bottom: 1rem;
+    }
+    &--spacing-small {
+        margin-top: $grid-gutter-width;
+        margin-bottom: $grid-gutter-width;
+    }
+    &--spacing-normal {
+        margin-top: $grid-gutter-width * 2;
+        margin-bottom: $grid-gutter-width * 2;
+    }
+}

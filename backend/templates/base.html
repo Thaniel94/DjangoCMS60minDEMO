@@ -1,0 +1,104 @@
+{% load cms_tags sekizai_tags static i18n menu_tags page_meta_tags gtm_tags solo_tags %}
+
+
+{% page_meta request.current_page as page_meta %}
+{% get_current_language as lang_code %}
+{% get_solo 'site_config.SiteConfig' as site_config %}
+
+
+<!DOCTYPE html>
+
+<html lang="{{ lang_code }}">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <title>
+            {% block page_meta_title %}{% page_attribute 'page_title' %}{% endblock %} - {{ site_config.site_name }} {{ site_config.site_subname }}
+        </title>
+    
+        {% block meta %}
+            {% include 'djangocms_page_meta/meta.html' with meta=page_meta %}
+        {% endblock meta %}
+
+        {% if site_config.favicon %}
+            <link rel="shortcut icon" href="{{ site_config.favicon }}" type="image/x-icon"/>
+        {% else %}
+            <link rel="shortcut icon" href="{% static 'global/img/favicon.ico' %}" type="image/x-icon"/>
+        {% endif %}
+
+        {% render_block 'css' %}
+
+        <script>
+            const DJANGO_ENV = '{{ settings.DJANGO_ENV.value }}';
+            document.addEventListener('DOMContentLoaded', function() {
+                if (window.django) {
+                    window.django.env = '{{ settings.DJANGO_ENV.value }}';
+                    window.django.isDebugMode = {{ settings.DEBUG|lower }};
+                } else {
+                    window.django = {
+                        env: '{{ settings.DJANGO_ENV.value }}',
+                        isDebugMode: {{ settings.DEBUG|lower }},
+                    }
+                }
+            });
+        </script>
+
+        {% if settings.DJANGO_ENV.value == 'local' %}
+
+            <script defer src="{{ settings.WEBPACK_DEV_URL }}/vendor.bundle.js" data-is-reload-on-page-edit="true"></script>
+            <script defer src="{{ settings.WEBPACK_DEV_URL }}/global.bundle.js" data-is-reload-on-page-edit="true"></script>
+
+            <link rel="stylesheet" href="{{ settings.WEBPACK_DEV_URL }}/vendor.css">
+            <link rel="stylesheet" href="{{ settings.WEBPACK_DEV_URL }}/global.css">
+
+            {% block head_local_frontend_files %}{% endblock %}
+
+        {% else %}
+
+            <script defer src="{% static 'dist/vendor.js' %}" data-is-reload-on-page-edit="true"></script>
+            <script defer src="{% static 'dist/global.js' %}" data-is-reload-on-page-edit="true"></script>
+
+            <link rel="stylesheet" href="{% static 'dist/vendor.css' %}">
+            <link rel="stylesheet" href="{% static 'dist/global.css' %}">
+
+            {% block head_prod_frontend_files %}{% endblock %}
+        {% endif %}
+
+        {% render_block 'head_frontend_files' %}
+
+        {% block head %}{% endblock %}
+
+{#        {% gtm_head settings.GTM_CONTAINER_ID %}#}
+    </head>
+
+    <body id="page-top" class="lang-{{ lang_code }} {% render_block 'body_classes' %}">
+{#        {% gtm_body settings.GTM_CONTAINER_ID %}#}
+
+        {% cms_toolbar %}
+
+        {% block content_before %}{% endblock %}
+
+        {% static_placeholder 'top bar' %}
+
+        <header class="header-container-fluid">
+            {% block header %}
+                {% placeholder 'header' %}
+            {% endblock %}
+        </header>
+
+        {% block messages %}
+            {% include 'includes/messages.html' with messages=messages %}
+        {% endblock messages %}
+
+        {% block content %}{% endblock %}
+
+        {% block content_after %}{% endblock %}
+
+        {% static_placeholder 'footer' %}
+        
+        {% render_block 'js' %}
+
+    </body>
+</html>

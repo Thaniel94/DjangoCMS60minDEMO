@@ -1,0 +1,19 @@
+{% load cms_tags menu_tags sekizai_tags static thumbnail %}
+
+{% with instance.get_link as link %}
+    <section class="card-plugin">
+        {% if link %}<a href="{{ link }}">{% endif %}
+            <img class="card-plugin__image" src="{% thumbnail instance.image 690x361 crop=True upscale=True subject_location=instance.image.subject_location %}">
+        {% if link %}</a>{% endif %}
+
+        {% if link %}<a href="{{ link }}" class="card-plugin__title-link">{% endif %}
+            <h2 class="card-plugin__title">{{ instance.title }}</h2>
+        {% if link %}</a>{% endif %}
+
+        <div class="card-plugin__content">
+            {% for plugin in instance.child_plugin_instances %}
+                {% render_plugin plugin %}
+            {% endfor %}
+        </div>
+    </section>
+{% endwith %}
